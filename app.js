@@ -12,7 +12,7 @@ const  url_rt = 'http://rt-ed.co.il';
 http.createServer(function (req, res) {
     console.log(req.url);
     if (req.url == '/test') {
-           res.end('<H1>hello test 5</h1>');        
+           res.end('<H1>hello test</h1>');        
     }
     else {
         console.log(url_rt);
