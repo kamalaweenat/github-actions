@@ -2,7 +2,7 @@ name: Docker Image - nodejs test app
 
 on:
   push:
-    branches: [ master ]  
+    branches: [ main ]  
 
 jobs:
 
