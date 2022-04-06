@@ -1,0 +1,45 @@
+name: Docker Image - nodejs test app
+
+on:
+  push:
+    branches: [ master ]  
+
+jobs:
+
+  build:
+    name: Build image and upload to docker hub
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Docker login
+      env:
+        DOCKER_USER: ${{ secrets.DOCKERHUB_USER }}
+        DOCKER_PWD: ${{ secrets.DOCKERHUB_PWD }}
+      run: docker login -u $DOCKER_USER -p $DOCKER_PWD
+        
+    - name: Build the Docker image - nodejs app test  
+      run: docker build -t kamalaweenat/nodejs_test:${{ github.sha }} .
+      
+    - name: Docker push to dockerhub
+      run: |
+        docker push kamalaweenat/nodejs_test:${{ github.sha }}    
+        #docker push kamalaweenat/nodejs_test:latest
+      
+#  deploy:
+#    needs: [build]
+#    name: deploy to k8s cluster
+#    runs-on: ubuntu-latest   
+#    steps:
+#    - uses: actions/checkout@v3
+#    - name: deploy to cluster
+    
+#      uses: steebchen/kubectl@v2.0.0
+#      with: # defaults to latest kubectl binary version
+#        config: ${{ secrets.KUBE_CONFIG_DATA }}
+#        command: set image deployment/nodejs_test container=kamalaweenat/${{ github.sha }}
+#    - name: verify deployment
+#      uses: steebchen/kubectl@v2.0.0
+#      with:
+#        config: ${{ secrets.KUBE_CONFIG_DATA }}
+#        version: v1.23.5 # specify kubectl binary version explicitly
+#        command: rollout status deployment/nodejs_test
