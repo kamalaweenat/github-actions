@@ -5,6 +5,7 @@ Automation proccess:
 2. save new Docker image to GockerHub
 3. Kubernatis start use latest Docker image
 
+
 again: this proccess must be automated. 
 As a trigger to start new build we use commit to master branch
 
